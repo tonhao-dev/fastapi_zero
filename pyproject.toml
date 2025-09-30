@@ -1,0 +1,39 @@
+[project]
+name = "fastapi-zero"
+version = "0.1.0"
+description = ""
+authors = [
+    { name = "Luis Santiago (Tonhão)", email = "luis.santiago@techbiz.com.br" },
+]
+readme = "README.md"
+requires-python = ">=3.13,<4.0"
+dependencies = ["fastapi[standard] (>=0.118.0,<0.119.0)"]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "ruff (>=0.13.2,<0.14.0)",
+    "pytest (>=8.4.2,<9.0.0)",
+    "pytest-cov (>=7.0.0,<8.0.0)",
+]
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+[tool.taskipy.tasks]
+lint = 'ruff check'
+pre_format = 'ruff check --fix'
+format = 'ruff format'
+run = 'fastapi dev fastapi_zero/app.py'
+pre_test = 'task lint'
+test = 'pytest -s -x --cov=fastapi_zero -vv'
+post_test = 'coverage html'

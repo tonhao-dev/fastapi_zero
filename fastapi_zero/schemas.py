@@ -19,3 +19,7 @@ class UserPublicSchema(BaseModel):
 
 class UserDB(UserSchema):
     id: int
+
+
+class UserListSchema(BaseModel):
+    users: list[UserPublicSchema]

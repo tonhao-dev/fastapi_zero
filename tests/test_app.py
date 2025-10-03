@@ -64,3 +64,17 @@ def test_delete_user(client):
 
     assert response.status_code == HTTPStatus.OK
     assert response.json() == {'message': 'User deleted'}
+
+
+def test_update_user_not_found(client):
+    response = client.put(
+        '/users/-1',
+        json={
+            'username': 'tonhas',
+            'email': 'luis.developer.ac@gmail.com',
+            'password': 'supersecret',
+        },
+    )
+
+    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.json() == {'detail': 'User not found'}
